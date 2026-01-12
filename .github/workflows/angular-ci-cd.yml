@@ -7,11 +7,14 @@ on:
       - uat
       - main
 
+permissions:
+  contents: write   # REQUIRED for gh-pages push
+
 jobs:
   deploy-develop:
     if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
-    environment: development   # ✅ no approval required
+    environment: development   # no approval
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -30,13 +33,18 @@ jobs:
       - name: Build Angular App
         run: npm run build -- --configuration=development --base-href=/robo-angular/develop/
 
+      - name: Set Git Identity
+        run: |
+          git config --global user.name "paulpremkumar"
+          git config --global user.email "paulprem.kumar92@gmail.com"
+
       - name: Deploy to GitHub Pages (Develop)
         run: npx gh-pages -d dist/robo-angular
 
   deploy-uat:
     if: github.ref == 'refs/heads/uat'
     runs-on: ubuntu-latest
-    environment: uat   # ✅ no required reviewers → auto deploy
+    environment: uat   # no approval
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -55,13 +63,18 @@ jobs:
       - name: Build Angular App
         run: npm run build -- --configuration=uat --base-href=/robo-angular/uat/
 
+      - name: Set Git Identity
+        run: |
+          git config --global user.name "paulpremkumar"
+          git config --global user.email "paulprem.kumar92@gmail.com"
+
       - name: Deploy to GitHub Pages (UAT)
         run: npx gh-pages -d dist/robo-angular
 
   deploy-production:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    environment: production   # ✅ requires manual approval
+    environment: production   # 🚨 manual approval required
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
