@@ -6,11 +6,14 @@ import { HttpLink } from 'apollo-angular/http';
   providedIn: 'root'
 })
 export class GraphqlService {
+   private apolloCreated = false;
  constructor(private apollo: Apollo, private httpLink: HttpLink) {
  this.createAppollo();
  }
  createAppollo(){
-   // Create a new client
+   if (this.apolloCreated) return;
+   try{
+    // Create a new client
 const client = new ApolloClient({
   link: this.httpLink.create({ uri: 'http://localhost:4000/graphql' }),
   cache: new InMemoryCache(),
@@ -18,6 +21,13 @@ const client = new ApolloClient({
 
 // Assign it to Apollo
 this.apollo.create({ link: client.link, cache: client.cache });
+
+   }catch (err:any) {
+    if (!err.message.includes('already created')) {
+      throw err;
+    }
+  }
+   
  }
 
 

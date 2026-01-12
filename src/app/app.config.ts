@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
      provideEffects([ProductEffect]), // ✅ this is correct
     provideHttpClient(),
      provideStoreDevtools({ maxAge: 25 }) ,
-     provideZonelessChangeDetection(),
+    // provideZonelessChangeDetection(),
     //  HttpClientModule,
     //  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
       provideHttpClient(withInterceptors([authInterceptor])),

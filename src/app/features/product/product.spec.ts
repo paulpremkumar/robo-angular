@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Product } from './product';
+import { provideHttpClient } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
 
 describe('Product', () => {
   let component: Product;
@@ -8,7 +10,8 @@ describe('Product', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Product]
+      imports: [Product,StoreModule.forRoot({})],
+      providers:[provideHttpClient()]
     })
     .compileComponents();
 
