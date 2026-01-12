@@ -104,5 +104,5 @@ jobs:
 
       - name: Deploy to GitHub Pages (Production)
         run: |
-          npx gh-pages -d dist/robo-angular \
+          npx gh-pages -d dist/robo-angular/browser \
             -r https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
