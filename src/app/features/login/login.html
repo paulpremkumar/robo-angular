@@ -1,0 +1,26 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div>
+        <label>User name</label>
+        <input type="text" formControlName="username" />
+        <small>Please  enter username</small>
+    </div>
+      <div>
+        <label>Password</label>
+        <input type="password" formControlName="password" />
+         <small>Please  enter password</small>
+    </div>
+    <div>
+        <button type="submit">Login</button>
+    </div>
+</form>
+<div >
+@for(x of this.loginSignal() | keyvalue;track x.key){
+   <div>
+ <div>{{x.key}}</div>
+    <div>{{x.value}}</div>
+   </div>
+   
+}@empty{
+    <div>No recods found</div>
+}
+</div>

@@ -1,0 +1,22 @@
+<div>
+    <input type="text" #searchValue>
+</div>
+<table >
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Product</th>
+        </tr>
+    </thead>
+    <tbody #tbody>
+        @for( x of productTableDataSignal();track x.id){
+ <tr [id]="x.id" #tr>
+            <td>{{x.id}}</td>
+            <td>{{x.name}}</td>
+        </tr>
+        }@empty{
+<div>No record found</div>
+        }
+       
+    </tbody>
+</table>
