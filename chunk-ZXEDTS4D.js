@@ -1,1 +1,0 @@
-import{Tb as t,Ub as o,ec as r,fc as c}from"./chunk-N3FGGBGO.js";var p=t("[Product] Load products"),a=t("[Product] Load product success",o()),s=t("[Product] Load product failure",o());var d=c("product"),n=r(d,e=>e.product);export{p as a,a as b,s as c,n as d};
