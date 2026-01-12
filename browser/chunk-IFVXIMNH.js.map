@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/store/actions/product.action.ts", "src/app/store/selectors/product.selector.ts"],
+  "sourcesContent": ["import { createAction,props } from \"@ngrx/store\";\nimport { Iproduct } from \"../../shared/interface/Iproduct\";\nexport const loadProducts=createAction(\"[Product] Load products\");\nexport const loadProductSuccess=createAction(\"[Product] Load product success\",props<{product:Iproduct[]}>());\nexport const loadProductFailure=createAction(\"[Product] Load product failure\",props<{error:any}>());\n", "import { createFeatureSelector, createSelector } from \"@ngrx/store\";\nimport { IinitialProductState} from \"../reducers/product.reducer\";\n\nexport const selectProductState=createFeatureSelector<IinitialProductState>('product');\nexport const selectAllProduct=createSelector(selectProductState,(state)=>state.product);\nexport const selectProductById=(productId:number)=>createSelector(selectAllProduct,\n    (products)=>products.find(product =>product.id===productId)\n)"],
+  "mappings": ";;;;;;;;AAEO,IAAM,eAAa,aAAa,yBAAyB;AACzD,IAAM,qBAAmB,aAAa,kCAAiC,MAAK,CAAwB;AACpG,IAAM,qBAAmB,aAAa,kCAAiC,MAAK,CAAe;;;ACD3F,IAAM,qBAAmB,sBAA4C,SAAS;AAC9E,IAAM,mBAAiB,eAAe,oBAAmB,CAAC,UAAQ,MAAM,OAAO;",
+  "names": []
+}
