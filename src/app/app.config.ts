@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withHashLocation } from '@angular/router';
 
 import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -15,7 +15,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     
-    provideRouter(routes),
+    provideRouter(routes, withHashLocation()),
       // provideEffects([ProductEffect]),
     //  importProvidersFrom(EffectsModule.forRoot([ProductEffect])),
     provideStore({login:loginReducer,product:productReducer}),
