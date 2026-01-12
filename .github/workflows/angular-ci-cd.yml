@@ -80,5 +80,10 @@ jobs:
       - name: Build Angular App
         run: npm run build -- --configuration=production --base-href=/robo-angular/
 
+      - name: Set Git Identity
+        run: |
+          git config --global user.name "paulpremkumar"
+          git config --global user.email "paulprem.kumar92@gmail.com"
+
       - name: Deploy to GitHub Pages (Production)
         run: npx gh-pages -d dist/robo-angular
