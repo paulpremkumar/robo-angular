@@ -14,7 +14,7 @@ import { authInterceptor } from './shared/interceptor/authorization-interceptor'
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideZonelessChangeDetection(),
+    
     provideRouter(routes),
       // provideEffects([ProductEffect]),
     //  importProvidersFrom(EffectsModule.forRoot([ProductEffect])),
@@ -22,6 +22,7 @@ export const appConfig: ApplicationConfig = {
      provideEffects([ProductEffect]), // ✅ this is correct
     provideHttpClient(),
      provideStoreDevtools({ maxAge: 25 }) ,
+    // provideZonelessChangeDetection(),
     //  HttpClientModule,
     //  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
       provideHttpClient(withInterceptors([authInterceptor])),

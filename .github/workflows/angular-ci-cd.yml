@@ -1,0 +1,108 @@
+name: Angular CI/CD
+
+on:
+  push:
+    branches:
+      - develop
+      - uat
+      - main
+
+permissions:
+  contents: write   # REQUIRED for gh-pages push
+
+jobs:
+  deploy-develop:
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    environment: development   # no approval
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.4
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Build Angular App
+        run: npm run build -- --configuration=development --base-href=/robo-angular/develop/
+
+      - name: Set Git Identity
+        run: |
+          git config --global user.name "paulpremkumar"
+          git config --global user.email "paulprem.kumar92@gmail.com"
+
+      - name: Deploy to GitHub Pages (Develop)
+        run: |
+          npx gh-pages -d dist/robo-angular \
+            -r https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+  deploy-uat:
+    if: github.ref == 'refs/heads/uat'
+    runs-on: ubuntu-latest
+    environment: uat   # no approval
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.4
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Build Angular App
+        run: npm run build -- --configuration=uat --base-href=/robo-angular/uat/
+
+      - name: Set Git Identity
+        run: |
+          git config --global user.name "paulpremkumar"
+          git config --global user.email "paulprem.kumar92@gmail.com"
+
+      - name: Deploy to GitHub Pages (UAT)
+        run: |
+          npx gh-pages -d dist/robo-angular \
+            -r https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+  deploy-production:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production   # 🚨 manual approval required
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.4
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Build Angular App
+        run: npm run build -- --configuration=production --base-href=/robo-angular/
+
+      - name: Set Git Identity
+        run: |
+          git config --global user.name "paulpremkumar"
+          git config --global user.email "paulprem.kumar92@gmail.com"
+
+      - name: Deploy to GitHub Pages (Production)
+        run: |
+          npx gh-pages -d dist/robo-angular \
+            -r https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
